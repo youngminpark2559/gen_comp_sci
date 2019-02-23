@@ -1,4 +1,4 @@
-# /home/young/Pictures/2019_02_23_00:41:18.png
+https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Young_Hyun_Bae_youtube/pics/2019_02_23_00:41:18.png
 
 Steps of compiling hello.c file to create hello excutable file
 
@@ -37,10 +37,10 @@ and when that excutable file is excuted, how is that excutable file located in t
 
 
 This illustration is about the memory when excutable file is excuted
-# /home/young/Pictures/2019_02_23_01:04:29.png
+https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Young_Hyun_Bae_youtube/pics/2019_02_23_01:04:29.png
 
 This illustration describes the structure of the executable file (ELF)
-# /home/young/Pictures/2019_02_23_01:06:48.png
+https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Young_Hyun_Bae_youtube/pics/2019_02_23_01:06:48.png
 
 When excutable file is excuted, it is located in the memory, which is called "process"
 
@@ -53,7 +53,7 @@ which means that one program takes 4GB memory (but this is virtual memory not RA
 
 # ======================================================================
 This illustration describes the structure of the executable file (ELF)
-# /home/young/Pictures/2019_02_23_01:06:48.png
+https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Young_Hyun_Bae_youtube/pics/2019_02_23_01:06:48.png
 
 Linux has ELF format for excutable file structure
 Windows has EXE format for excutable file structure
