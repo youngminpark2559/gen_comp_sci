@@ -1,0 +1,175 @@
+
+# You create a program named "binary" 
+# by using, compiling, linking lib.o and prog.o files
+gcc -o binary lib.o prog.o
+
+# ======================================================================
+# Makefile version which does same thing with above command
+
+# binary: target you want to create
+# lib.o, prog.o: dependencies which are needed to create binary
+binary:lib.o prog.o
+  # Rule (or recipe) about how to create that target binary
+  gcc -o binary lib.o prog.o
+
+# ======================================================================
+But you should create lib.o and prog.o to use them
+
+so, you can extend your Makefile into like this
+
+binary:lib.o prog.o
+  gcc -o binary -g -Wall -c lib.o prog.o
+
+lib.o:lib.c
+  gcc -o lib.o -g -Wall -c lib.c
+
+prog.o:prog.c
+  gcc -o prog.o -g -Wall -c prog.c
+
+clean:
+  rm *.o binary
+
+# ======================================================================
+You can see duplicated parts (binary, gcc, and options)
+
+# https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_10:19:26.png
+
+How can you make duplicated ones removed?
+
+Answer is to use macros.
+
+# ======================================================================
+CC=gcc
+CFLAGS=-g -Wall
+OUTPUT=binary
+
+${OUTPUT}:lib.o prog.o
+  ${CC} -o ${OUTPUT} ${CFLAGS} lib.o prog.o
+
+lib.o:lib.c
+  ${CC} -o lib.o ${CFLAGS} -c lib.c
+
+prog.o:prog.c
+  ${CC} -o prog.o ${CFLAGS} -c prog.c
+
+clean:
+  rm *.o {OUTPUT}
+
+# ======================================================================
+You can see dependency files are located in recipe lines
+
+# https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_10:24:08.png
+
+How to make Makefile look good?
+
+The solution is also to use macro.
+
+CC=gcc
+CFLAGS=-g -Wall
+OUTPUT=binary
+OBJFILES=lib.o prog.o
+
+${OUTPUT}:${OBJFILES}
+  ${CC} -o ${OUTPUT} ${CFLAGS} ${OBJFILES}
+
+lib.o:lib.c
+  ${CC} -o lib.o ${CFLAGS} -c lib.c
+
+prog.o:prog.c
+  ${CC} -o prog.o ${CFLAGS} -c prog.c
+
+clean:
+  rm *.o {OUTPUT}
+
+# ======================================================================
+https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_10:28:13.png
+
+You can see parts where single C source file is compiled into single object file
+
+And this case can exist in many places.
+
+CC=gcc
+CFLAGS=-g -Wall
+OUTPUT=binary
+OBJFILES=lib.o prog.o
+
+${OUTPUT}:${OBJFILES}
+  ${CC} -o ${OUTPUT} ${CFLAGS} ${OBJFILES}
+
+# lib.o:lib.c
+#   ${CC} -o lib.o ${CFLAGS} -c lib.c
+# prog.o:prog.c
+#   ${CC} -o prog.o ${CFLAGS} -c prog.c
+# You compile each C file into each object file
+# %: wild card, indicates to any C file and object file in current directory
+%.o:%.c
+  # $<: first dependency, %.c file
+  # $@: target name, %.o file
+  ${CC} ${CFLAGS} -c $< -o $@
+
+clean:
+  rm *.o {OUTPUT}
+
+# ======================================================================
+
+CC=gcc
+CFLAGS=-g -Wall
+OUTPUT=binary
+OBJFILES=lib.o prog.o
+# All files whose extension is .o and .c follow .c.o: rule
+.SUFFIXES: .o .c
+
+${OUTPUT}:${OBJFILES}
+  ${CC} -o ${OUTPUT} ${CFLAGS} ${OBJFILES}
+
+# %.o:%.c
+# Compile each c file into each o file
+.c.o:
+  ${CC} ${CFLAGS} -c $< -o $@
+
+clean:
+  rm *.o {OUTPUT}
+
+# ======================================================================
+target: dependency
+  recipe
+
+
+target was files like object file or executable file.
+
+But there is cases where target is not a file.
+Those targets are used to call actions (dependency or recipe)
+
+Those targets are called as .PHONY target.
+
+# clean is .PHONY Target
+clean:
+  # Excute /bin/rm to remove *.o and core
+  /bin/rm -f *.o core
+
+You can use recipe of clean by typing "make clean"
+
+# ======================================================================
+Standard phony targets
+
+all: performs all tasks to build the entire application
+
+install: Copy and paste compiled files and binaries into some directories like system and shared lib directories
+
+clean: delete all binary files which are generated from the source files
+
+distclean: delete all the generated files which were not in the original source distribution
+In other words, delete all intermediate files (like temp file, etc) for the compile 
+
+# ======================================================================
+
+General steps when you build and install project
+
+# Compile project
+make all
+
+# Install (copy and paste) all compiled result files into target directories
+make install
+
+# Remove unnecessary files
+make clean

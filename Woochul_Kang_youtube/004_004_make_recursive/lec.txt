@@ -1,0 +1,65 @@
+A large project has compilcated structure
+
+# https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_10:45:55.png
+
+# ======================================================================
+Is it possible that you can compile above compilcated-structure-project by single Makefile?
+
+It's possible if single Makefile defines all rules against all files.
+
+But in this situation, Makefile becomes too complicated and becomes not manageable.
+
+# ======================================================================
+The solution to make above compilcated situation easy is 
+to use multiple Makefiles in each directory.
+
+And each Makefile in each directory has rules about how to compile files in its own directory.
+
+# ======================================================================
+Makefiles which are located in base directories play a role of calling Makefiles 
+which are located in sub directories.
+
+And Makefiles which are located in base directories can link result files 
+which are generated from sub-Makefiles
+
+# ======================================================================
+Makefiles which are located in more base directories play a role of calling Makefiles 
+which are located in sub directories.
+
+And Makefiles which are located in more base directories can link result files 
+which are generated from sub-Makefiles
+or can install files.
+
+# ======================================================================
+This is called "recursive make".
+
+# ======================================================================
+# directories which you use are lib and app
+DIRS=lib app
+# Phony targets which you use are all and clean
+.PHONY: all clean
+
+# all target
+all:
+  # Recipes for all target
+  # Iterate DIRS
+  @for d in ${DIRS};\
+  do\
+    # go to d directory, and in that directory, call Makefile
+    # $d: value which is stored in variable d
+    # $$d: when this Makefile hand this shell line in other Makefile
+    # this Makefile should pass raw d (which is not interpreted) to other Makefile
+    # $ is used as escape character
+    ${MAKE} -C $$d;\
+  done
+  # Above line is actually one line which is concatenated by "\"
+  # You can use "@" not to print @-marked-shell-line
+
+# clean phony target
+clean:
+  # Recipes for clean phony target
+  @for d in ${DIRS};\
+  do\
+    # Go to each directory, and in that directory, call make clean
+    ${MAKE} -C $$d clean;\
+  done

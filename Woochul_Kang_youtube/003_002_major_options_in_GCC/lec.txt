@@ -1,0 +1,99 @@
+There are very much options in GCC
+
+But there are only some of options which you often use
+
+# ======================================================================
+To compile: -c
+
+Speficy output file name: -o <filename>
+
+Include debugging symbols: -g
+
+GDB friendly output: -ggdb
+
+Show all (most) warnings: -Wall
+
+Be stubborn about standards: -ansi and -pedantic
+
+Optimizations: -O, -O<numbers>
+
+# ======================================================================
+Compiler path options
+
+-I<dir>: include dir in search for included files (like header file which is used for program). Cumulative (you can use -I option mutiple)
+
+-L<dir>: Search dir for Libraries. Cumulative
+
+-l: link to lib; -lfoo links to libfoo.so if libfoo.so exists, or to libfoo.a as a second choice
+
+so: shared library file
+a: static library file
+
+# ======================================================================
+Compiler preprocessor options
+
+GCC uses preprocessor by calling it.
+
+-E: GCC makes preprocessor only work (remain parts (compiler, assembly, link) won't work) to process macros
+
+-Ddef: pass definitions to codes (same with using #def)
+
+-Udef: Undefine def
+
+# ======================================================================
+Warning is important
+
+-v: verbose mode, gives version number, various infomation
+
+-w: supress warning as much as possible
+
+-W: more verbose warnings
+
+-Wall: prints all (or most) warnings
+
+# ======================================================================
+compiler debugging options
+-g: include debugging information, pass debugging info to gbd
+
+-pg: provide "profile information"(like which parts consume much time) for gprof
+
+# ======================================================================
+Compier input output options
+
+-c: stop after creating object files, don't link (preprocessor -> compile -> aseembly creating object file)
+Don't attatch library files
+
+-o<file>: output is file; craete object file in that name; default is a.out
+
+# ======================================================================
+compiler control options
+
+they're needed because C language grammar changes in time.
+
+-ansi: compile code supposing code is written in c90 C standard, if other syntax is used, error happens
+equivalent to -std=c90
+
+-pedantic: gcc compier has various extensions. 
+don't use those extensions. you compile c code by using pure C standard syntax
+
+-std=c99: compile code which is written in ISO C99 standard
+
+ISO C99 standard is latest standard (in 2016)
+
+-static: don't use shared library but use static library, supress linking with shared library
+
+-O[level]: optimization level; 0 1 2 3 , default is 1
+much used case is 2
+
+-Os: optimize for reducing file size
+
+# ======================================================================
+common set of options
+
+-O2 -Wall -pedentic
+
+- make sure you understand any warnings
+
+- don't use -pedentic when compiling Linux kernel, which uses many GCC extension
+
+# ======================================================================

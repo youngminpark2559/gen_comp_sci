@@ -1,0 +1,68 @@
+GCC is a popular console-based compiler for *NIX platforms and others;
+GCC can crosscompile code for various architectures
+crosscompile means like you generate object codes 
+which can be used for ARM from x86 environment
+
+- gcc command is used to compile C programs; 
+g++ command is used to compile C++ code
+
+- GCC can compile various languages like ADA, 
+Java because GCC is designed like that
+
+- GCC performs all of these;
+-- Preprocessing: processes macros
+-- Compile, assembly
+-- linking
+
+# ======================================================================
+# https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_23_23:51:07.png
+
+# ======================================================================
+GCC architecture
+
+# https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_23_23:53:42.png
+
+3 main parts: front end, middle end, back end
+
+- front end converts source file (like C file) into the intermidiate code called Generic
+if you have C++ code, C++ code is converted into the intermidiate code called Generic
+Generic is similar concept with the Byte code from Java
+if you have Java code, Java code is converted into the intermidiate code called Generic
+
+It means that if you create a new language,
+what you have to do is to create the intermediate module (AST)
+which can convert your language source files into the Generic
+
+# ======================================================================
+In middle end, optimization steps (optimization pass1, ..., pass N) are performed
+
+And RTL (register transfer language) is created 
+
+# ======================================================================
+RTL is converted into the machien code
+
+# ======================================================================
+Simple example of using GCC
+
+# ======================================================================
+1. Create c source file
+touch hello.c
+
+#include <stdio.h>
+int main(void)
+{
+  printf("Hello\n");
+}
+
+# ======================================================================
+2. Compile source file
+# -o: specify name of object file
+# hello.c: source file name
+# -g: adds symbolic information for debugging
+# -Wall: prints all warning messages (very useful)
+gcc -o hello hello.c -g -Wall
+
+# ======================================================================
+3. Execute program
+
+./hello
