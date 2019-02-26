@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+   <HEAD>
+      <TITLE>My first HTML document</TITLE>
+      <style rel="stylesheet" type="text/css">
+body {
+ font-size: 23px;
+ 
+ margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 80px;
+    margin-left: 80px;
+    
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 80px;
+    padding-left: 80px;
+    
+    line-height:35px;
+}
+img {
+ width:900px;
+}
+</style>
+      <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    "HTML-CSS" : {
+        availableFonts : ["STIX"],
+        preferredFont : "STIX",
+        webFont : "STIX-Web",
+        imageFont : null
+    }
+});
+</script>
+     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">    
+    MathJax.Hub.Config({
+        HTML: ["input/TeX","output/HTML-CSS"],
+        TeX: { extensions: ["AMSmath.js","AMSsymbols.js"], 
+               equationNumbers: { autoNumber: "AMS" } },
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: { inlineMath: [ ['$$$','$$$'] ],
+                   displayMath: [ ['$$$$','$$$$'] ],
+                   processEscapes: true },
+        "HTML-CSS": { availableFonts: ["TeX"],
+                      linebreaks: { automatic: true } }
+    });
+</script>
+   </HEAD>
+   <BODY>
+bikesharingdemand
+<xmp>
+What can you compare in a shell script file?
+- numbers, strings
+- return value from the command 
+(if return value is 0, it means command was success)
+- whether some file exists? what is the access permission of that file?
+
+======================================================================
+You can use if statement in one line
+if TEST_COMMANDS; then COMMANDS; fi
+
+You can use if statement in multiple lines
+if condition
+then
+  statements
+elif condition
+then
+  statements
+else
+  statements
+fi
+
+======================================================================
+Test on files
+
+if [-f /etc/passwd];
+then
+  ACTION
+fi
+
+-e file: check whether the file exists
+
+-d file: check whether the file is a directory
+
+-f file: check whether the file is a regular file 
+(like not a symbolic link, directory, device node, etc)
+
+-s file: check whether the file is non-zero size
+
+-g file: check whether the file has sgid set
+
+-u file: check whether the file has suid set
+
+-r file: check whether the file is readable
+
+-w file: check whether the file is writable
+
+-x file: check whether the file is executable
+
+======================================================================
+if [ string1 == string2 ]; 
+then
+  ACTION
+fi
+
+if [ string1 != string2 ]; 
+then
+  ACTION
+fi
+
+#!/bin/bash
+
+echo "Enter any color code for red or yellow or green, For example, type R or Y or G: "
+
+# read input from the user 
+# and assign passed parameter into COLOR variable
+read COLOR
+
+echo $COLOR
+
+# section that compares the entry and disply a message
+# if you use $COLOR, it can lead to the situation where <[  == "R" ]>
+# which is syntax error
+# So, you use "" to make <if [ "" == "R" ]>
+if [ "$COLOR" == "R" ]
+then
+  echo "STOP. LEAVE WAY FOR OTHERS"
+elif [ "$COLOR" == "Y" ]
+then
+  echo "GET READY YOUR WAY WILL BE OPEN SHORTLY"
+elif [ "$COLOR" == "Y" ]
+then
+  echo "MOVE.. IT IS YOUR TURN TO GO"
+else
+  echo "INCORRECT COLOR CODE"
+fi
+
+======================================================================
+You can do numerical test
+by using following operators inside of [ ]
+
+-eq: equal to
+-ne: not equal to
+-gt: greather than
+-lt: less than
+-ge: greather than or equal to
+-le: less than or equal to
+
+======================================================================
+You can perform arithmetic expression in a shell script file
+by using 3 ways
+
+1. Use expr utility
+# expr 8 + 8: performs the opertion
+# $(expr 8 + 8): Get value itself by referencing
+echo $(expr 8 + 8)
+
+2. Use $((...)) (mostly used)
+echo $((x+1))
+
+3. Use let
+let x=(1+2); echo $x
+
+======================================================================
+vim agetest.sh
+
+#!/bin/bash
+
+echo "put your age: "
+
+read AGE
+
+# ||: or
+if [ $AGE -lt 20 ] || [ $AGE -gt 50 ] ; then
+  echo "Sorry, your are out of the age range"
+elif [ $AGE -gt 20 ] || [ $AGE -lt 30 ] ; then
+  echo "You are in 20s"
+elif [ $AGE -gt 30 ] || [ $AGE -lt 40 ] ; then
+  echo "You are in 30s"
+elif [ $AGE -gt 40 ] || [ $AGE -lt 50 ] ; then
+  echo "You are in 40s"
+fi
+
+sudo chmod +x agetest.sh
+
+./agetest.sh
+      
+</xmp>
+   </BODY>
+</HTML>
+

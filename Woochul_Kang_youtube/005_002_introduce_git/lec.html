@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+   <HEAD>
+      <TITLE>My first HTML document</TITLE>
+      <style rel="stylesheet" type="text/css">
+body {
+ font-size: 23px;
+ 
+ margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 80px;
+    margin-left: 80px;
+    
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 80px;
+    padding-left: 80px;
+    
+    line-height:35px;
+}
+img {
+ width:900px;
+}
+</style>
+      <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    "HTML-CSS" : {
+        availableFonts : ["STIX"],
+        preferredFont : "STIX",
+        webFont : "STIX-Web",
+        imageFont : null
+    }
+});
+</script>
+     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">    
+    MathJax.Hub.Config({
+        HTML: ["input/TeX","output/HTML-CSS"],
+        TeX: { extensions: ["AMSmath.js","AMSsymbols.js"], 
+               equationNumbers: { autoNumber: "AMS" } },
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: { inlineMath: [ ['$$$','$$$'] ],
+                   displayMath: [ ['$$$$','$$$$'] ],
+                   processEscapes: true },
+        "HTML-CSS": { availableFonts: ["TeX"],
+                      linebreaks: { automatic: true } }
+    });
+</script>
+   </HEAD>
+   <BODY>
+<xmp>
+
+======================================================================
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_18:48:06.png"><xmp>
+
+In a previous VCS, only difference parts are saved at each moment.
+
+C1 means code version 1
+At C2, A1 
+which is the edited file A 
+is stored along with C1 (picture might be wrong)
+
+So, if you want to have the final code (most-right one at C5),
+you get all of differences up to C5 and mix them up.
+
+It's not efficient.
+
+======================================================================
+The way of git
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_18:48:57.png"><xmp>
+
+======================================================================
+Git directory (repository) has your actual code
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_18:50:25.png"><xmp>
+
+- You perform "checkout the project" 
+then you get copied code into your local PC (working directory)
+
+- You edit codes
+
+Status after this: modified
+
+- There is sort of buffer zone called "staging area"
+You "stage" edited files onto "staging area"
+
+Why should you use "staging area"?
+To review edited codes before commit
+
+Status after this: staged
+
+--------------------------------------------------
+- You can "commit" to push your edited code into git directory (repository)
+
+Status after this: commited
+
+======================================================================
+Basic workflow
+
+- Init a repository 
+
+You can clone codes from repository into your local working directory
+
+- You stage the files to your staging area
+
+- You do a commit, 
+which stores the edited files in repository permanently
+
+======================================================================
+sudo apt-get install git
+
+Set your identity
+git config --global user.name "Your name"
+git config --global user.email "your_mail@mail.com"
+
+Check your setting
+git config --list
+
+======================================================================
+Init a repository
+
+There are 2 ways
+
+1. Create a repository from the scratch, and run
+git init
+
+2. clone an existing repository
+git clone remote_repository_address
+
+======================================================================
+Edit hello.txt and edited hello.txt file stays in working directory
+
+In current directory where hello.txt file is located,
+execute
+git status
+
+And you will see message
+
+Changes not staged for commit
+modified: hello.txt
+
+======================================================================
+Let's send edited file hello.txt to stage area
+git add hello.txt
+
+git status
+Changes to be comminted
+modified: hello.txt
+
+======================================================================
+Commit to store edit history and edited file into repository
+
+git commit -m 'initial commin'
+
+======================================================================
+To view edit history
+git log
+
+======================================================================
+Other options
+git log -p: to check specific diff
+git log --stat: to check summarized changes
+git log --since=1.days: to check changes since 1 days ago
+
+======================================================================
+     
+</xmp>
+   </BODY>
+</HTML>

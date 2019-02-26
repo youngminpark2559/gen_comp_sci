@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+   <HEAD>
+      <TITLE>My first HTML document</TITLE>
+      <style rel="stylesheet" type="text/css">
+body {
+ font-size: 23px;
+ 
+ margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 80px;
+    margin-left: 80px;
+    
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 80px;
+    padding-left: 80px;
+    
+    line-height:35px;
+}
+img {
+ width:900px;
+}
+</style>
+      <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    "HTML-CSS" : {
+        availableFonts : ["STIX"],
+        preferredFont : "STIX",
+        webFont : "STIX-Web",
+        imageFont : null
+    }
+});
+</script>
+     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">    
+    MathJax.Hub.Config({
+        HTML: ["input/TeX","output/HTML-CSS"],
+        TeX: { extensions: ["AMSmath.js","AMSsymbols.js"], 
+               equationNumbers: { autoNumber: "AMS" } },
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: { inlineMath: [ ['$$$','$$$'] ],
+                   displayMath: [ ['$$$$','$$$$'] ],
+                   processEscapes: true },
+        "HTML-CSS": { availableFonts: ["TeX"],
+                      linebreaks: { automatic: true } }
+    });
+</script>
+   </HEAD>
+   <BODY>
+<xmp>
+
+Make is a program which can help for compiling a project 
+which has complicated structure.
+
+Make also can help the case where you edit some parts from the project,
+Make can compile only edited parts, resulting in reduced compile time.
+
+======================================================================
+When you have a small program, 
+all sentences and functions can be written into a single file.
+
+But when you have large program,
+you should write many lines,
+you should have multiple components,
+you should have more than one programmers who write source files.
+
+======================================================================
+It will be too difficult to grasp the source code,
+if you write all lines into the single file.
+
+And compile time will spend much time,
+because whenever you edit small parts,
+you should compile the entire project.
+
+Multiple programmers can't edit one source file at the same time.
+
+In conclusin, dividing components is desired.
+You divide projects into multiple files.
+
+======================================================================
+Header file contains prototypes of functions.
+
+Source file contains definitions of functions.
+
+======================================================================
+Mozilla is a project 
+which is composed of Firefox (web browser), Thunderbird (email client), etc
+
+======================================================================
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_08:54:01.png"><xmp>
+
+Mozilla project has 2500 subdirectories, 26000 files
+
+======================================================================
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_08:55:08.png"><xmp>
+
+Complicated relationships between files
+
+======================================================================
+When you have multiple source files,
+and when compile them,
+typing names of all files on GCC is difficult.
+
+And to compile only edited files,
+you should track and know what files had been changed.
+But those tracking and knowing manually every edited parts are difficult.
+
+Files have dependencies to each other.
+Managing dependencies is difficult.
+
+======================================================================
+Above difficulties can be resolved by Make program.
+
+======================================================================
+Make program interprets and executes Makefile or makefile
+
+Makefile is a script file 
+which contains commands about how to automatically compile and link your project.
+
+======================================================================
+How Make works?
+
+- First, Make configures most-top-target.
+Target is sort of a program which you want to create.
+
+To create targets, you can need sub files and other files.
+
+Make compiles entire project recursively.
+
+Targets will be only built 
+when targets are older than the current files which targets depend on.
+
+======================================================================
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_09:06:03.png"><xmp>
+
+======================================================================
+touch Makefile
+
+# sum is most-top-taget or final-ultimate-target which you want to create
+# sum target depends on main.o sum.o
+sum:main.o sum.o
+  # How to create (recipe) sum from main.o sum.o
+  # Link object files main.o and sum.o 
+  # to create an object file sum
+  gcc -o sum main.o sum.o
+
+main.o:main.c sum.h
+  gcc -c main.c
+
+sum.o:sum.c sum.h
+  gcc -c sum.c
+      
+</xmp>
+   </BODY>
+</HTML>

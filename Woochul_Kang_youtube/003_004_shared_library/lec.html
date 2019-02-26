@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+   <HEAD>
+      <TITLE>My first HTML document</TITLE>
+      <style rel="stylesheet" type="text/css">
+body {
+ font-size: 23px;
+ 
+ margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 80px;
+    margin-left: 80px;
+    
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 80px;
+    padding-left: 80px;
+    
+    line-height:35px;
+}
+img {
+ width:900px;
+}
+</style>
+      <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    "HTML-CSS" : {
+        availableFonts : ["STIX"],
+        preferredFont : "STIX",
+        webFont : "STIX-Web",
+        imageFont : null
+    }
+});
+</script>
+     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">    
+    MathJax.Hub.Config({
+        HTML: ["input/TeX","output/HTML-CSS"],
+        TeX: { extensions: ["AMSmath.js","AMSsymbols.js"], 
+               equationNumbers: { autoNumber: "AMS" } },
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: { inlineMath: [ ['$$$','$$$'] ],
+                   displayMath: [ ['$$$$','$$$$'] ],
+                   processEscapes: true },
+        "HTML-CSS": { availableFonts: ["TeX"],
+                      linebreaks: { automatic: true } }
+    });
+</script>
+   </HEAD>
+   <BODY>
+<xmp>
+
+======================================================================
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_11:51:03.png"><xmp>
+
+======================================================================
+There are some points 
+which you should be careful when you create shared library files
+unlike when you create archive files (static library files)
+
+======================================================================
+1. Functions in shared library files should be "reentrant"
+
+"Reentrant" means 
+that you shouldn't use "global variables" in shared library files
+
+Imagine 2 executable files are pointing to one shared library file at the same time,
+and if shared library file has global variable x, 
+global variable x can be changed by exe1 file,
+then exe2 file can reference unexpectedly changed value from the global variable x
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_11:55:34.png"><xmp>
+
+======================================================================
+2. Codes in shared library files should be "position-independent".
+
+When shared library file is loaded onto memory,
+you can't predict the specific address in the memory place 
+where shared library file is loaded.
+
+So, you shouldn't write any codes 
+in executable files, object fiels, shared library files, etc,
+with supposing a specific address 
+where shared library files are loaded onto the memory.
+
+You shouldn't suppose you can jump or call 
+to the fixed address when writing codes.
+
+You shouldn't suppose you can access data 
+at the fixed locations when writing codes.
+
+======================================================================
+Shared library naming rule
+
+# 1.0: version infomation
+libmyfuncs.so.1.0: shared library file 
+which has most version information is actual shared library file 
+which you create
+
+--------------------------------------------------
+libmyfuncs.so: when you compile, 
+you use this name which doesn't have version information
+But this is not an actual file 
+but it's symbolic link to the actual shared library file like libmyfuncs.so.1.0
+sudo ln -s /path1/libmyfuncs.so.1.0 /path2/libmyfuncs.so
+
+--------------------------------------------------
+You can make libmyfuncs.so.1 file symbolic-link to actual shared library file 
+which you want to use like libmyfuncs.so.1.0, libmyfuncs.so.1.1, libmyfuncs.so.1.2, etc
+And this file libmyfuncs.so.1 is used by the executable file at runtime
+
+sudo ln -s /path1/libmyfuncs.so.1.0 /path2/libmyfuncs1.so
+sudo ln -s /path1/libmyfuncs.so.1.1 /path2/libmyfuncs1.so
+sudo ln -s /path1/libmyfuncs.so.1.2 /path2/libmyfuncs1.so
+
+At excutable time, you need version information
+but you don' need even minor version
+
+======================================================================
+How to create shared library files
+
+1. Create object files 
+with using -fPIC (position-independent code) option of GCC
+gcc -fPIC -c func1.c
+gcc -fPIC -c func2.c
+
+--------------------------------------------------
+2. Create shared library file by gathering object files
+For this step, you can use gcc and ld (Linker)
+
+# -shared: you're going to create shared library file 
+# (default so it's omitable, 
+# but recommended to use this for explicit expression)
+# -Wl, <options>: <options> are passed to the ld (Linker) 
+# compile and asembly steps are performed in GCC
+# Linking is performed by Linker (ld)
+# -soname=libmyfuncs.so.1: specify the name of representitive so file (shared library file)
+# *.o: you will include all object files 
+# which are located in the current directory into so file
+# -o libmyfuncs.so.1.0: specify the name of actual shared library file 
+# which you're going to create
+# -lc: link libc
+gcc -fPIC -shared -Wl, -soname=libmyfuncs.so.1 *.o -o libmyfuncs.so.1.0 -lc
+
+--------------------------------------------------
+# Other way but same effect
+ld -shared -soname=libmyfuncs.so.1 *.o -o libmyfuncs.so.1.0 -lc
+
+======================================================================
+After you create shared library file like libmyfuncs.so.1.0,
+you need to perform symbolic link
+
+# libmyfuncs.so.1.0: actual shared library file
+# libmyfuncs.so: representitive name of libmyfuncs shared library file
+# which is used when you link files at compile time in gcc
+ln -s libmyfuncs.so.1.0 libmyfuncs.so
+
+# libmyfuncs.so.1: is used at runtime when dynamic linking is performed
+ln -s libmyfuncs.so.1.0 libmyfuncs.so.1
+
+======================================================================
+To link an application (foo) with shared library file
+
+# When you want to use shared library libmyfuncs on foo.c file
+# you need to add path (-L/mypath/lib) 
+# which contains shared library file libmyfuncs
+gcc -o foo foo.c -L/mypath/lib -lmyfuncs
+
+======================================================================
+Command-line options
+
+-L: is used to tell the places to the linker 
+where the linker should search to find your libxxx.so file
+
+-l: is used to tell about which shared object files to be linked with first 
+to the linker 
+
+- Wl: is used to tell about to pass specified options onto the linker
+to gcc/g++ compilers 
+
+======================================================================
+How to find shared library files at runtime
+How to link shared library files to executable and other files at runtime
+
+Excutable files have pointers.
+
+At runtime, library files 
+which are pointed by pointers are linked with executable files
+
+But you can't search all directories to find specific shared library files.
+So, system library paths (like /lib, /usr/lib, etc) 
+which you should search to find shared library files 
+are written in /etc/ld.so.conf
+
+======================================================================
+You also can have your own custom libraries than system library
+
+Paths for your own custom libraries should be written 
+in LD_LIBRARY_PATH environment variable
+like export LD_LIBRARY_PATH=$HOME/foo/lib
+
+Then, Linux loader which executes programs searches all libraries 
+which are located in the written paths at runtime
+      
+</xmp>
+   </BODY>
+</HTML>
+
+
+

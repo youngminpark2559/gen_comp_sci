@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+   <HEAD>
+      <TITLE>My first HTML document</TITLE>
+      <style rel="stylesheet" type="text/css">
+body {
+ font-size: 23px;
+ 
+ margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 80px;
+    margin-left: 80px;
+    
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 80px;
+    padding-left: 80px;
+    
+    line-height:35px;
+}
+img {
+ width:900px;
+}
+</style>
+      <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    "HTML-CSS" : {
+        availableFonts : ["STIX"],
+        preferredFont : "STIX",
+        webFont : "STIX-Web",
+        imageFont : null
+    }
+});
+</script>
+     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">    
+    MathJax.Hub.Config({
+        HTML: ["input/TeX","output/HTML-CSS"],
+        TeX: { extensions: ["AMSmath.js","AMSsymbols.js"], 
+               equationNumbers: { autoNumber: "AMS" } },
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: { inlineMath: [ ['$$$','$$$'] ],
+                   displayMath: [ ['$$$$','$$$$'] ],
+                   processEscapes: true },
+        "HTML-CSS": { availableFonts: ["TeX"],
+                      linebreaks: { automatic: true } }
+    });
+</script>
+   </HEAD>
+   <BODY>
+<xmp>
+There are very much options in GCC
+
+But there are only some of options which you often use
+
+======================================================================
+To compile, use -c
+
+To speficy output object file name, use -o <filename>
+
+To include debugging symbols, use -g
+
+To make GDB friendly output, use -ggdb
+
+To print all (or most) warnings, use -Wall
+
+To be stubborn about standards, use -ansi and -pedantic
+
+To do optimizations, use -O, -O<numbers>
+
+======================================================================
+Compiler path options
+
+-I<dir>: include directory for compiler 
+to search for included files 
+(like header file which is used for program). 
+
+You can use -I option mutiple times.
+
+-L<dir>: to make comilier search directory to find Libraries. 
+You can use -I option mutiple times.
+
+-l: link to lib; 
+-lfoo links to libfoo.so if libfoo.so exists, 
+or to libfoo.a as a second choice
+
+so: shared library file
+a: static library file
+
+======================================================================
+Compiler preprocessor options
+
+GCC uses preprocessor by calling it.
+
+-E: GCC orders only preprocessor work to process macros
+(other parts (compiler, assembly, link) won't work) 
+
+-Ddef: pass definitions to codes in command (same with using #def in code)
+
+-Udef: Undefine def
+
+======================================================================
+Warning is important
+
+-v: verbose mode, gives version number, various infomation
+
+-w: supress warning as much as possible
+
+-W: more verbose warnings
+
+-Wall: prints all (or most) warnings
+
+======================================================================
+compiler debugging options
+-g: include debugging information, pass debugging info to gbd
+
+-pg: provide "profile information" (like which parts consume much time) for gprof
+
+======================================================================
+Compiler input output options
+
+-c: stop after creating object files, 
+don't perform link step (preprocessor -> compile -> aseembly creating object file)
+In other words, don't attatch library files
+
+-o<file>: output is file; 
+craete object file in that name; default is a.out
+
+======================================================================
+Compiler control options
+
+Compiler control options are needed because C language syntax changes in time.
+
+--------------------------------------------------
+-ansi: compile given code supposing given code is written in c90 C standard, 
+if other syntax is used, create error
+
+Using -ansi is equivalent to -std=c90
+
+--------------------------------------------------
+-pedantic: gcc compiler has various extensions. 
+Don't use those extensions. you compile c code by using pure C standard syntax
+
+--------------------------------------------------
+-std=c99: compile given code with supposing given code is written in ISO C99 standard
+
+ISO C99 standard is latest standard (in 2016)
+
+--------------------------------------------------
+-static: don't use shared library but use static library, 
+suppress linking with shared library
+
+--------------------------------------------------
+-O[level]: optimization level; 0 1 2 3 , default is 1
+much used case is 2
+
+-Os: optimize for reducing file size
+
+======================================================================
+Common combination of options
+
+-O2 -Wall -pedentic
+
+- make sure you understand any warnings
+
+- don't use -pedentic when compiling Linux kernel, which uses many GCC extensions
+
+======================================================================
+      
+</xmp>
+   </BODY>
+</HTML>
+
+

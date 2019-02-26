@@ -8,7 +8,7 @@ then you need to compile files based on those configurations,
 then you need to move compiled binary files into system directory
 This compilicated steps of compile can be helped by Make
 
-# ======================================================================
+======================================================================
 - Makefile is the core file in Make program
 
 - Makefile contains rules of compile and build
@@ -27,7 +27,7 @@ but you can compile partially by detecting above dependencies to each file
 - Makefile also can do other tasks as well as compiling source files
 Makefile can be used in a similar way to using shell script.
 
-# ======================================================================
+======================================================================
 How to use Make
 
 # You use "makefile" or "Makefile" resided in current directory 
@@ -37,7 +37,7 @@ make
 If you don't specify targets, make builds against "all" targets
 make [-f makefile] [options] [targets]
 
-# ======================================================================
+======================================================================
 Makefile is composed of
 
 - Target: You heard that Makefile is scripts written by shell commands
@@ -61,7 +61,7 @@ If that "target" is not specified, you will get make error
 You can speficy "target" which you want to execute
 make [-f makefile] [options] [targets]
 
-# ======================================================================
+======================================================================
 You can use variable in makefile
 
 variable in makefile is called macro
@@ -70,7 +70,7 @@ How to define macro: macro_name=value
 
 How to use macro: $(macro_name) or ${macro_name}
 
-# ======================================================================
+======================================================================
 Let's see "target" in more detail
 
 - You build "target" by executing specified commands for "target"
@@ -87,12 +87,12 @@ you reperform building "target"
 
 - Each command line should start with "tab"
 
-# ======================================================================
+======================================================================
 Basic macro
 - CC: specifies compiler program
 - CFLAGS: specifies compile option
 
-# ======================================================================
+======================================================================
 Example of Makefile
 
 # makefile for hello

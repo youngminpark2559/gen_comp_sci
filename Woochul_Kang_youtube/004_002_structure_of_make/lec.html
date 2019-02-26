@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+   <HEAD>
+      <TITLE>My first HTML document</TITLE>
+      <style rel="stylesheet" type="text/css">
+body {
+ font-size: 23px;
+ 
+ margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 80px;
+    margin-left: 80px;
+    
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 80px;
+    padding-left: 80px;
+    
+    line-height:35px;
+}
+img {
+ width:900px;
+}
+</style>
+      <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    "HTML-CSS" : {
+        availableFonts : ["STIX"],
+        preferredFont : "STIX",
+        webFont : "STIX-Web",
+        imageFont : null
+    }
+});
+</script>
+     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">    
+    MathJax.Hub.Config({
+        HTML: ["input/TeX","output/HTML-CSS"],
+        TeX: { extensions: ["AMSmath.js","AMSsymbols.js"], 
+               equationNumbers: { autoNumber: "AMS" } },
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: { inlineMath: [ ['$$$','$$$'] ],
+                   displayMath: [ ['$$$$','$$$$'] ],
+                   processEscapes: true },
+        "HTML-CSS": { availableFonts: ["TeX"],
+                      linebreaks: { automatic: true } }
+    });
+</script>
+   </HEAD>
+   <BODY>
+<xmp>
+
+======================================================================
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_09:12:04.png"><xmp>
+
+Structure of Makefile
+
+======================================================================
+Components of a Makefile
+
+Comments
+Rules (Recipe)
+Dependency lines
+Shell lines
+Macros
+
+======================================================================
+Comments start with "#"
+
+You can use "\" to concatenate break-line.
+
+======================================================================
+"make -p" gives a list of all implicit rules and predefined macros
+which are applied to the current Makefile
+
+======================================================================
+Final ultimate file (target) should come 
+at the most-top-location in descending order.
+
+======================================================================
+If multiple files (like main.o this.o) have same dependency, 
+you can write:
+main.o this.o:bitvect.h
+
+======================================================================
+Macros (in other words, variables)
+
+Macro prevents you from typing same strings multiple times.
+
+If you change the value of the macro, 
+that change affects all texts of the Makefile,
+which is efficient.
+
+How to define:
+MACRONAME=macro_value
+
+How to use:
+${MACRONAME} or $(MACRONAME)
+
+======================================================================
+Example of macro
+where macroc creates other macros
+
+# Create HOME macro
+HOME=/home/courses/ese101
+
+# Create CPP macro using HOME macro
+CPP=${HOME}/cpp
+TCPP=${HOME}/tcpp
+PROJ=.
+INCL=-I${PROJ} -I${CPP} -I${TCPP}
+
+======================================================================
+Predefined macros in Makefile
+
+--------------------------------------------------
+$@: full target name
+
+lib.o:aaa.c bbb.c
+  echo "target $@"
+  # target lib.o
+
+--------------------------------------------------
+$?: list all files which are newer than the current target
+In other words, list all files which are created newly than lib.o
+lib.o:aaa.c bbb.c
+  # If file generation time is like 10:10, 10:12, 9:30
+  echo "newer source file: $?"
+  # newer source file: aaa.c
+
+--------------------------------------------------
+$<: list first dependency file
+
+lib.o:aaa.c bbb.c
+  echo "first dependency source file: $<"
+  # first dependency source file: aaa.c
+
+--------------------------------------------------
+$*: print name of the target, without suffix (extension)
+
+lib.o:aaa.c bbb.c
+  echo "target name without suffix: $*"
+  # target name without suffix: lib
+
+--------------------------------------------------
+$^: print names of all dependency files
+
+lib.o:aaa.c bbb.c
+  echo "names of all dependency files: $&"
+
+======================================================================
+By using those predefined macros,
+you can more easily create Makefile.
+      
+</xmp>
+   </BODY>
+</HTML>
+

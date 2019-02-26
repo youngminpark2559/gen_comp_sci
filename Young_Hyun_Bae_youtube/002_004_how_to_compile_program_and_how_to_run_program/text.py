@@ -7,7 +7,7 @@ Compile means to create an excutable file from a source file
 But compile has multiple steps which are managed 
 by multiple programs (Preprocessor(cpp), Compiler(cc1), Assembler(as), Linker(ld))
 
-# ======================================================================
+======================================================================
 - Human writes c source file (hello.c)
 
 - Preprocessor preprocesses hello.c, 
@@ -31,7 +31,7 @@ Above step is called "static linking"
 Dynaic linking means you don't include libraries into executable file
 but you map shared library files to memory of executable file at runtime
 
-# ======================================================================
+======================================================================
 Let's see how does excutable file which is created via compile step look?
 and when that excutable file is excuted, how is that excutable file located in the memory?
 
@@ -51,11 +51,11 @@ Those are memory size
 First illustration describes memory when one program is excuted
 which means that one program takes 4GB memory (but this is virtual memory not RAM)
 
-# ======================================================================
+======================================================================
 This illustration describes the structure of the executable file (ELF)
 https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Young_Hyun_Bae_youtube/pics/2019_02_23_01:06:48.png
 
 Linux has ELF format for excutable file structure
 Windows has EXE format for excutable file structure
 
-# ======================================================================
+======================================================================

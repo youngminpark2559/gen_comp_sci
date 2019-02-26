@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+   <HEAD>
+      <TITLE>My first HTML document</TITLE>
+      <style rel="stylesheet" type="text/css">
+body {
+ font-size: 23px;
+ 
+ margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 80px;
+    margin-left: 80px;
+    
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 80px;
+    padding-left: 80px;
+    
+    line-height:35px;
+}
+img {
+ width:900px;
+}
+</style>
+      <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    "HTML-CSS" : {
+        availableFonts : ["STIX"],
+        preferredFont : "STIX",
+        webFont : "STIX-Web",
+        imageFont : null
+    }
+});
+</script>
+     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">    
+    MathJax.Hub.Config({
+        HTML: ["input/TeX","output/HTML-CSS"],
+        TeX: { extensions: ["AMSmath.js","AMSsymbols.js"], 
+               equationNumbers: { autoNumber: "AMS" } },
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: { inlineMath: [ ['$$$','$$$'] ],
+                   displayMath: [ ['$$$$','$$$$'] ],
+                   processEscapes: true },
+        "HTML-CSS": { availableFonts: ["TeX"],
+                      linebreaks: { automatic: true } }
+    });
+</script>
+   </HEAD>
+   <BODY>
+<xmp>
+
+# You create a program named "binary" 
+# by linking lib.o and prog.o files
+gcc -o binary lib.o prog.o
+
+======================================================================
+# Commands in Makefile version 
+# which does same thing with above manual command
+
+# binary: target you want to create
+# lib.o, prog.o: dependencies which are needed to create binary
+binary:lib.o prog.o
+  # Rule (or recipe) about how to create that target binary
+  gcc -o binary lib.o prog.o
+
+======================================================================
+But first, you should create lib.o and prog.o to use them
+
+so, you can extend your Makefile into like this
+
+binary:lib.o prog.o
+  gcc -o binary -g -Wall -c lib.o prog.o
+
+lib.o:lib.c
+  gcc -o lib.o -g -Wall -c lib.c
+
+prog.o:prog.c
+  gcc -o prog.o -g -Wall -c prog.c
+
+clean:
+  rm *.o binary
+
+======================================================================
+You can see duplicated parts (binary, gcc, and options)
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_10:19:26.png"><xmp>
+
+How can you remove duplicated ones?
+
+Answer is to use macros.
+
+======================================================================
+# Create CC variable and assign gcc into CC variable
+CC=gcc
+# Create CFLAGS variable and assign <-g -Wall> into CFLAGS variable
+CFLAGS=-g -Wall
+# Create OUTPUT variable and assign binary into OUTPUT variable
+OUTPUT=binary
+
+${OUTPUT}:lib.o prog.o
+  ${CC} -o ${OUTPUT} ${CFLAGS} lib.o prog.o
+
+lib.o:lib.c
+  ${CC} -o lib.o ${CFLAGS} -c lib.c
+
+prog.o:prog.c
+  ${CC} -o prog.o ${CFLAGS} -c prog.c
+
+clean:
+  # *.o: all files which has .o extension
+  rm *.o {OUTPUT}
+
+======================================================================
+You can see dependency files are located in recipe lines
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_10:24:08.png"><xmp>
+
+How to make Makefile look better by removing duplicated parts?
+
+The solution is also to use macro.
+
+CC=gcc
+CFLAGS=-g -Wall
+OUTPUT=binary
+# Create OBJFILES variable and assign <lib.o prog.o> into OBJFILES variable
+OBJFILES=lib.o prog.o
+
+${OUTPUT}:${OBJFILES}
+  ${CC} -o ${OUTPUT} ${CFLAGS} ${OBJFILES}
+
+lib.o:lib.c
+  ${CC} -o lib.o ${CFLAGS} -c lib.c
+
+prog.o:prog.c
+  ${CC} -o prog.o ${CFLAGS} -c prog.c
+
+clean:
+  rm *.o {OUTPUT}
+
+======================================================================
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_10:28:13.png"><xmp>
+
+You can see parts where single C source file is compiled into single object file
+like this
+${CC} -o lib.o ${CFLAGS} -c lib.c
+
+And this case can occurs in many places.
+
+CC=gcc
+CFLAGS=-g -Wall
+OUTPUT=binary
+OBJFILES=lib.o prog.o
+
+${OUTPUT}:${OBJFILES}
+  ${CC} -o ${OUTPUT} ${CFLAGS} ${OBJFILES}
+
+# lib.o:lib.c
+#   ${CC} -o lib.o ${CFLAGS} -c lib.c
+# prog.o:prog.c
+#   ${CC} -o prog.o ${CFLAGS} -c prog.c
+# You compile each C file into each object file
+# %: wild card, indicates to any C file and object file in current directory
+%.o:%.c
+  # $<: first dependency, %.c file
+  # $@: target name, %.o file
+  ${CC} ${CFLAGS} -c $< -o $@
+
+clean:
+  rm *.o {OUTPUT}
+
+======================================================================
+
+CC=gcc
+CFLAGS=-g -Wall
+OUTPUT=binary
+OBJFILES=lib.o prog.o
+# All files whose extension is .o and .c follow .c.o: rule
+.SUFFIXES: .o .c
+
+${OUTPUT}:${OBJFILES}
+  ${CC} -o ${OUTPUT} ${CFLAGS} ${OBJFILES}
+
+# %.o:%.c
+# Compile each c file into each o file
+.c.o:
+  ${CC} ${CFLAGS} -c $< -o $@
+
+clean:
+  rm *.o {OUTPUT}
+
+======================================================================
+target: dependency
+  recipe
+
+target was files like object file or executable file.
+
+But there is cases where target is not a file.
+Those targets are used to call actions (dependency or recipe)
+
+Those targets are called as .PHONY target.
+
+# clean is .PHONY target
+clean:
+  # Excute /bin/rm to remove *.o and core
+  /bin/rm -f *.o core
+
+You can use recipe of clean by typing "make clean"
+
+======================================================================
+Standard phony targets
+
+all: performs all tasks to build the entire application
+
+install: Copy and paste compiled files and binaries 
+into some directories like system and shared lib directories
+
+clean: delete all binary files which are generated from the source files
+
+distclean: delete all the generated files 
+which were not in the original source distribution
+
+In other words, delete all intermediate files 
+(like temp file, etc) for the compile 
+
+======================================================================
+
+General steps when you build and install project
+
+# Compile project
+make all
+
+# Install (copy and paste) all compiled result files into target directories
+make install
+
+# Remove unnecessary files
+make clean
+      
+</xmp>
+   </BODY>
+</HTML>
+
+
+

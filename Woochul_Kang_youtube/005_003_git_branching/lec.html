@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+   <HEAD>
+      <TITLE>My first HTML document</TITLE>
+      <style rel="stylesheet" type="text/css">
+body {
+ font-size: 23px;
+ 
+ margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 80px;
+    margin-left: 80px;
+    
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 80px;
+    padding-left: 80px;
+    
+    line-height:35px;
+}
+img {
+ width:900px;
+}
+</style>
+      <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    "HTML-CSS" : {
+        availableFonts : ["STIX"],
+        preferredFont : "STIX",
+        webFont : "STIX-Web",
+        imageFont : null
+    }
+});
+</script>
+     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js" type="text/javascript">    
+    MathJax.Hub.Config({
+        HTML: ["input/TeX","output/HTML-CSS"],
+        TeX: { extensions: ["AMSmath.js","AMSsymbols.js"], 
+               equationNumbers: { autoNumber: "AMS" } },
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: { inlineMath: [ ['$$$','$$$'] ],
+                   displayMath: [ ['$$$$','$$$$'] ],
+                   processEscapes: true },
+        "HTML-CSS": { availableFonts: ["TeX"],
+                      linebreaks: { automatic: true } }
+    });
+</script>
+   </HEAD>
+   <BODY>
+<xmp>
+
+There is a main stream line in software development.
+
+And you sometimes want to develop being-developed-software in different direction.
+
+Having different flow of the being-developed-software is called branching.
+
+======================================================================
+And you can add "differently edited code" into main stream line of project
+which is called "merging"
+
+======================================================================
+The reason you do merging and branching is to do "non-linear programming"
+
+======================================================================
+Suppose you have copied project A from repository
+
+And main stream line of this project A is called master
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_20:21:01.png"><xmp>
+
+======================================================================
+You edit A and get B
+
+You edit B and get C
+
+And master pointer points to latest code (C)
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_20:21:56.png"><xmp>
+
+======================================================================
+You create branch bug123
+# -b: for creating branch
+git checkout -b bug123
+
+# To see your branches
+git branch
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_20:23:04.png"><xmp>
+
+Star means code stream in which you're working now
+
+======================================================================
+You edit C and get D
+
+You edit D and get E
+
+bug123 branch points to E
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_20:24:26.png"><xmp>
+
+======================================================================
+# When you merge code state of bug123 branch into master branch,
+# first, you checkout to master branch
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_20:25:04.png"><xmp>
+
+======================================================================
+Then, you merge "code" of bug123 branchy into master branch
+git merge bug123
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_20:26:31.png"><xmp>
+
+And merged code from master branch and bug123 branch points E (latest code)
+
+======================================================================
+Now, bug123 branch is no useful anymore
+so, you can remove it
+git branch -d bug123
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_20:28:28.png"><xmp>
+
+======================================================================
+Another possible scenario
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_20:29:04.png"><xmp>
+
+======================================================================
+you edit code in master branch
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_20:29:35.png"><xmp>
+
+======================================================================
+To merge 2 branches,
+first, you checkout to master branch
+
+git checkout master
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_20:30:21.png"><xmp>
+
+======================================================================
+git merge bug456
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_20:31:02.png"><xmp>
+
+Contents (F and G) of bug456 branch are merged into master branch
+and H becomes latest code
+
+======================================================================
+There is case where merging 2 branches work smoothly
+when the edit (D and E) in master branch has no common parts 
+with the edit (F and G) in bug456 branch
+
+======================================================================
+What if "D and E changes" edited the same parts which "F and G changes" edited?
+
+In that case, merging can't happen automatically.
+
+In that case, developers should manually resolve conflict 
+and then should try to merge 2 branches again
+
+======================================================================
+After merging, you can delete bug456 branch
+
+</xmp><img src="https://raw.githubusercontent.com/youngminpark2559/gen_comp_sci/master/Woochul_Kang_youtube/pics/2019_02_24_20:37:35.png"><xmp>
+
+======================================================================
+      
+</xmp>
+   </BODY>
+</HTML>
+
